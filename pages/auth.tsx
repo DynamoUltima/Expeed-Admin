@@ -1,7 +1,7 @@
 
 import { LockClosedIcon } from '@heroicons/react/solid'
 import React, { useEffect, useState } from "react"
-import { auth } from '../firebase/clientApp';
+import { auth, db } from '../firebase/clientApp';
 import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 // import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import Link from 'next/link';
