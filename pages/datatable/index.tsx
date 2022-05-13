@@ -6,7 +6,7 @@ import { db } from "../../firebase/clientApp";
 import Clients from "./clients";
 import { z } from "zod"
 
-function index({ message }: { message: DocumentData[] }) {
+function index({ message }: { message: [] }) {
     console.log(message);
     return (
         <>
