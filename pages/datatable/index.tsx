@@ -53,7 +53,7 @@ export async function getStaticProps(context: any) {
 
     type DataType = z.infer<typeof Data>
 
-    console.log('called');
+    // console.log('called');
 
     let mydata: DocumentData[] = []
     let normalData: DataType[] = [];
@@ -62,7 +62,7 @@ export async function getStaticProps(context: any) {
 
     const todosQuery = query(todosCollection);
     let querySnapshot = await getDocs(todosQuery);
-    const result: QueryDocumentSnapshot[] = [];
+    // const result: QueryDocumentSnapshot[] = [];
     // querySnapshot.forEach((snapshot) => {
 
     //     let data = snapshot.data()
@@ -92,6 +92,7 @@ export async function getStaticProps(context: any) {
 
     return {
         props: { message: normalData },
+        // revalidate: 10000000000
         // notFound:true
     }
 }

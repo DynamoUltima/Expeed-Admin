@@ -2,10 +2,10 @@
 import axios from 'axios';
 import * as React from 'react';
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Column, useGlobalFilter, useSortBy, useTable, } from 'react-table';
+import { Column, HeaderGroup, Row, TableBodyPropGetter, TableBodyProps, TableInstance, TablePropGetter, TableProps, TableState, useGlobalFilter, useSortBy, useTable, } from 'react-table';
 import GlobalFilter from '../../components/globalFilter';
 import { db } from '../../firebase/clientApp';
-import {GetServerSideProps, GetStaticProps, PreviewData} from 'next'
+import { GetServerSideProps, GetStaticProps, PreviewData } from 'next'
 import { addDoc, collection, DocumentData, getDocs, limit, query, QueryDocumentSnapshot, QuerySnapshot, serverTimestamp, setDoc, where } from 'firebase/firestore'
 import { ParsedUrlQuery } from 'querystring';
 
@@ -13,21 +13,21 @@ import { ParsedUrlQuery } from 'querystring';
 
 
 
-type details={
-    price:string,
-    id:string,
-    
+type details = {
+    price: string,
+    id: string,
+
 }
 
-const Clients = (props:{super:[]}) => {
+const Clients = (props: { super: {}[] }) => {
     const [products, setProducts] = useState([]);
     // const [clients, setClients] = useState<DocumentData[]>([]);
     // const [fireData, setFireData] = useState<QuerySnapshot<DocumentData>>()
-  
 
-//    let newdata= clients;
-   let mydata: [] = [...props.super]
-   
+
+    //    let newdata= clients;
+    // let mydata: [] = [...props.super]
+
 
     console.log('super')
     console.log(props.super);
@@ -75,7 +75,7 @@ const Clients = (props:{super:[]}) => {
 
 
 
-            
+
 
 
 
@@ -115,7 +115,7 @@ const Clients = (props:{super:[]}) => {
 
     //    // fetchData()
 
-      
+
 
 
     //     // fireData?.forEach((snapshot)=>{
@@ -186,11 +186,11 @@ const Clients = (props:{super:[]}) => {
 
     ]), [])
 
-  
+
 
     // const productData: Array<any> = useMemo(() => [...products], [products])
 
-    const productData: Array<any> = useMemo(() => [...mydata], [mydata])
+    const productData: Array<any> = useMemo(() => [...props.super], [props.super])
 
     // const productColumns: Array<Column> = useMemo(
     //     () => products[0]
@@ -215,8 +215,8 @@ const Clients = (props:{super:[]}) => {
 
 
     const productColumns: Array<Column> = useMemo(
-        () => mydata[0]
-            ? Object.keys(mydata[0])
+        () => props.super[0]
+            ? Object.keys(props.super[0])
                 // .filter((key) => key !== "rating")
                 .map((key) => {
 
@@ -224,7 +224,7 @@ const Clients = (props:{super:[]}) => {
                         return {
                             Header: key,
                             accessor: key,
-                            Cell: ({ value }) => <img src={value} />,
+                            Cell: ({ value }) => <img src={value} alt="image" />,
                             maxWidth: 70
                         }
 
@@ -240,7 +240,7 @@ const Clients = (props:{super:[]}) => {
             {
                 id: "Edit",
                 Header: "Edit",
-                Cell: ({ row }:any) => (
+                Cell: ({ row }: any) => (
                     <button onClick={() => alert("Editing " + row.values.phone)} className="pl-4  pr-4 pt-2 pb-2 text-black rounded-md bg-green-300 hover:bg-green-200 transition-colors">
                         Edit
                     </button>
@@ -260,11 +260,21 @@ const Clients = (props:{super:[]}) => {
     }
 
     // const tableInstance = useTable<any>({ columns, data })
-    const tableInstance = useTable({ columns: productColumns, data: productData }, useGlobalFilter, tableHooks, useSortBy)
+    const tableInstance:any = useTable({ columns: productColumns, data: productData }, useGlobalFilter, tableHooks, useSortBy)
 
+    interface tableInstanceProps {
+        getTableProps:(propGetter?: TablePropGetter<object> | undefined) => TableProps,
+        getTableBodyProps:(propGetter?: TableBodyPropGetter<object> | undefined) => TableBodyProps,
+        headerGroups: HeaderGroup<object>[],
+        rows: Row<object>[],
+        prepareRow:(row: Row<object>) => void,
+        preGlobalFilteredRows:Array<Row>,
+        setGlobalFilter:(filterValue:any) => void,
+        state:TableState<object>,
 
+    }
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, preGlobalFilteredRows, setGlobalFilter, state, } = tableInstance;
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, preGlobalFilteredRows, setGlobalFilter, state } = tableInstance;
 
 
     return (
@@ -278,7 +288,7 @@ const Clients = (props:{super:[]}) => {
                     <div className='overflow-x-auto '>
                         <table className='table-fixed text-base text-gray-900'  {...getTableProps()}>
                             <thead className='p-2'>
-                                {headerGroups.map((headerGroup,) => (
+                                {headerGroups.map((headerGroup: { id: React.Key | null | undefined; getHeaderGroupProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableRowElement> & React.HTMLAttributes<HTMLTableRowElement>; headers: any[]; },) => (
 
                                     <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className='border border-green-500'>
                                         {headerGroup.headers.map((column) => (
@@ -296,7 +306,7 @@ const Clients = (props:{super:[]}) => {
                                 }
                             </thead>
                             <tbody {...getTableBodyProps()}>
-                                {rows.map((row, idx) => {
+                                {rows.map((row: { id: React.Key | null | undefined; getRowProps: () => JSX.IntrinsicAttributes & React.ClassAttributes<HTMLTableRowElement> & React.HTMLAttributes<HTMLTableRowElement>; cells: any[]; }, idx: number) => {
                                     prepareRow(row)
                                     return <tr key={row.id} {...row.getRowProps()} className={isEven(idx) ? "bg-green-400 bg-opacity-10" : ""}>
                                         {row.cells.map((cell, idx) => (<td key={idx} {...cell.getCellProps()} className='border border-green-500 p-5'>
@@ -322,13 +332,13 @@ const Clients = (props:{super:[]}) => {
 export default Clients;
 
 
-export const getServerSideProps :GetServerSideProps<{
+export const getServerSideProps: GetServerSideProps<{
     [key: string]: any;
-}, ParsedUrlQuery, PreviewData>= async  (context:any)=> {
+}, ParsedUrlQuery, PreviewData> = async (context: any) => {
 
-    return  {
-        props: {message: 'hello  after world'},
-        notFound:true
+    return {
+        props: { message: 'hello  after world' },
+        notFound: true
     }
     // let mydata: DocumentData[] = []
 
@@ -336,7 +346,7 @@ export const getServerSideProps :GetServerSideProps<{
     // console.log(mydata)
     // let data="hello"
 
-    
+
 
     // const todosCollection = collection(db, "clients");
 
@@ -351,18 +361,18 @@ export const getServerSideProps :GetServerSideProps<{
 
     // const response = await axios.get('https://fakestoreapi.com/products').catch((err) => console.log(err));
 
-            // if (response) {
-            //     const products = response.data;
+    // if (response) {
+    //     const products = response.data;
 
-            //     console.log("Products: ", products)
-            //     return  {
-            //         props: {clients : products}
-            //     }
-                
-            // }
+    //     console.log("Products: ", products)
+    //     return  {
+    //         props: {clients : products}
+    //     }
 
-    
+    // }
 
-  
+
+
+
 
 }

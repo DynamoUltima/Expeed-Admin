@@ -90,7 +90,7 @@ const Auth = (): JSX.Element => {
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
             <p className="mt-2 text-center text-sm text-gray-600">
 
-              <a href="#" className="font-medium text-lg text-indigo-600 hover:text-indigo-500">
+              <a  className="font-medium text-lg text-indigo-600 hover:text-indigo-500">
                 Expeed Admin
               </a>
             </p>
@@ -146,7 +146,8 @@ const Auth = (): JSX.Element => {
               </div>
 
               <div className="text-sm">
-                <a href="/dashboard" className="font-medium text-indigo-600 hover:text-indigo-500">
+              {/* href="/dashboard"  */}
+                <a className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
                 </a>
               </div>

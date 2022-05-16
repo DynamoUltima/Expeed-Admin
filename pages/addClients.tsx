@@ -7,15 +7,15 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 
-export  async function getServerSideProps (context:any){
+// export  async function getServerSideProps (context:any){
 
-  console.log('called');
+//   console.log('called');
 
-  return  {
-      props: {message: 'hello world'},
-      // notFound:true
-  }
-}
+//   return  {
+//       props: {message: 'hello world'},
+//       // notFound:true
+//   }
+// }
 
 
 interface FormData {
@@ -33,12 +33,12 @@ type CredentialInputs = {
   phone: string,
 };
 
-function addClientsForm({message}:{message:string}) {
-console.log(message);
+function addClientsForm() {
+// console.log(message);
 
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [clients, setClients] = useState({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
+  // const [clients, setClients] = useState({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
 
 
   const formik = useFormik({
@@ -75,7 +75,7 @@ console.log(message);
 
         console.log(docRefs)
         console.log(docRefs.id)
-        console.log(clients);
+        // console.log(clients);
 
 
         alert(`client with id ${docRefs.id} is added succesfully`)
@@ -89,39 +89,39 @@ console.log(message);
     }
   })
 
-  const { register, handleSubmit, formState: { errors } } = useForm<CredentialInputs>();
-  const onSubmit: SubmitHandler<CredentialInputs> = async () => {
-    //e: { preventDefault: () => void; }
-    // e.preventDefault()
-    //await  sendData(clients);
-    try {
+  // const { register, handleSubmit, formState: { errors } } = useForm<CredentialInputs>();
+  // const onSubmit: SubmitHandler<CredentialInputs> = async () => {
+  //   //e: { preventDefault: () => void; }
+  //   // e.preventDefault()
+  //   //await  sendData(clients);
+  //   try {
 
-      const collectionRef = collection(db, "clients");
-      //check if email already exists 
-      //before adding a client
-      const docRefs = await addDoc(collectionRef, { ...clients, timestamp: serverTimestamp() })
-
-
-      console.log(docRefs)
-      console.log(docRefs.id)
-      console.log(clients);
+  //     const collectionRef = collection(db, "clients");
+  //     //check if email already exists 
+  //     //before adding a client
+  //     const docRefs = await addDoc(collectionRef, { ...clients, timestamp: serverTimestamp() })
 
 
-      alert(`client with id ${docRefs.id} is added succesfully`)
-      setClients({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
-
-    } catch (error) {
-
-      console.log(error)
-
-    }
+  //     console.log(docRefs)
+  //     console.log(docRefs.id)
+  //     console.log(clients);
 
 
+  //     alert(`client with id ${docRefs.id} is added succesfully`)
+  //     setClients({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
+
+  //   } catch (error) {
+
+  //     console.log(error)
+
+  //   }
 
 
-  }
 
-  console.log(formik.values);
+
+  // }
+
+  // console.log(formik.values);
 
 
   return (
