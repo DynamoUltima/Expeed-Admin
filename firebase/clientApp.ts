@@ -14,14 +14,24 @@ import {getFirestore} from "@firebase/firestore"
 //     measurementId: process.env.NEXT_PUBLIC_FIRE_BASE_MEASUREMENT_ID
 //   };
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDJLdo8CUee_QiBaH8z3cIU7GorCxJIDb8",
+//   authDomain: "expeed-3781d.firebaseapp.com",
+//   projectId: "expeed-3781d",
+//   storageBucket: "expeed-3781d.appspot.com",
+//   messagingSenderId: "747281546768",
+//   appId: "1:747281546768:web:94e6179a7951cb13ce1495",
+//   measurementId: "G-BWHHVGLGC1"
+// };
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDJLdo8CUee_QiBaH8z3cIU7GorCxJIDb8",
-  authDomain: "expeed-3781d.firebaseapp.com",
-  projectId: "expeed-3781d",
-  storageBucket: "expeed-3781d.appspot.com",
-  messagingSenderId: "747281546768",
-  appId: "1:747281546768:web:94e6179a7951cb13ce1495",
-  measurementId: "G-BWHHVGLGC1"
+  apiKey: "AIzaSyD3SDBuOA2YYvTEATUYhOuNcF1RpFnOJwM",
+  authDomain: "expeed-admin.firebaseapp.com",
+  projectId: "expeed-admin",
+  storageBucket: "expeed-admin.appspot.com",
+  messagingSenderId: "30315655269",
+  appId: "1:30315655269:web:cb43501edcaeb80fc2568c",
+  measurementId: "G-NPKY6PVHZ0"
 };
 
 
