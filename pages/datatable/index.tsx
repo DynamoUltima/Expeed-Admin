@@ -22,6 +22,7 @@ function index({ message }: { message: [] }) {
 }
 
 export default index;
+
 // {
 //     lastName: 'Lartey',
 //     email: 'dynamo.joey@gmail.com',
@@ -49,6 +50,7 @@ export async function getStaticProps(context: any) {
         phone: z.string(),
         campus: z.string(),
         city: z.string(),
+        id:z.string(),
     })
 
     type DataType = z.infer<typeof Data>
@@ -62,20 +64,11 @@ export async function getStaticProps(context: any) {
 
     const todosQuery = query(todosCollection);
     let querySnapshot = await getDocs(todosQuery);
-    // const result: QueryDocumentSnapshot[] = [];
-    // querySnapshot.forEach((snapshot) => {
-
-    //     let data = snapshot.data()
-    //     // console.log(data)
-    //     const res = Data.parse(data)
-    //     // result.push(snapshot);
-    //     // mydata.push(snapshot.data());
-    //     normalData.push(res);
-    //     // storeData.current.push(snapshot.data())
-    // });
+  
     querySnapshot.docs.map((item) => {
         // console.log(item.data())
         let data = item.data()
+      
         const res = Data.parse(data)
         
         normalData.push(res);

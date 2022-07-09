@@ -6,21 +6,17 @@ import { Column, HeaderGroup, Row, TableBodyPropGetter, TableBodyProps, TableIns
 import GlobalFilter from '../../components/globalFilter';
 import { db } from '../../firebase/clientApp';
 import { GetServerSideProps, GetStaticProps, PreviewData } from 'next'
-import { addDoc, collection, DocumentData, getDocs, limit, query, QueryDocumentSnapshot, QuerySnapshot, serverTimestamp, setDoc, where } from 'firebase/firestore'
+import { addDoc, collection, DocumentData, getDocs,deleteDoc, doc } from 'firebase/firestore'
 import { ParsedUrlQuery } from 'querystring';
 
 
 
 
 
-type details = {
-    price: string,
-    id: string,
 
-}
 
 const Clients = (props: { super: {}[] }) => {
-    const [products, setProducts] = useState([]);
+   
     // const [clients, setClients] = useState<DocumentData[]>([]);
     // const [fireData, setFireData] = useState<QuerySnapshot<DocumentData>>()
 
@@ -33,118 +29,10 @@ const Clients = (props: { super: {}[] }) => {
     console.log(props.super);
 
 
-    // console.log("--newdata---")
-
-    // console.log(message);
-
-    // let clientData: any[] = []
-
-    // let mySnapshot: QuerySnapshot<DocumentData>
-    // setProducts(clients)
-    // console.log('clients')
-    // console.log(products)
+    
 
 
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-
-    //         ///firebase Trial
-
-
-
-    //         // const todosCollection = collection(db, "clients");
-
-    //         // const todosQuery = query(todosCollection);
-    //         // const querySnapshot = await getDocs(todosQuery);
-    //         // const result: QueryDocumentSnapshot<DocumentData>[] = [];
-    //         // querySnapshot.forEach((snapshot) => {
-    //         //     result.push(snapshot);
-    //         //     mydata.push(snapshot.data());
-    //         //     // storeData.current.push(snapshot.data())
-    //         // });
-    //         // // if(mydata.length!=0){
-    //         // //     storeData.current=mydata
-
-    //         // // }
-
-    //         // storeData.current = [...mydata];
-
-    //         // setClients(storeData.current)
-
-
-
-
-
-
-
-
-    //         // mySnapshot =querySnapshot;
-
-
-    //         // setFireData(querySnapshot);
-    //         //   setClients(mydata);
-
-    //         // console.log('---result---');
-    //         // console.log(result);
-    //         // console.log('----querysnapshot-----');
-    //         // console.log(querySnapshot);
-
-
-    //         // console.log('---clients---');
-    //         // // console.log(clients);
-    //         // console.log(mydata)
-    //         // console.log('------------------------------------------')
-
-
-    //         // if(mydata.length!==0){
-    //         //     setClients(mydata);
-
-    //         // }
-
-
-    //         // const response = await axios.get('https://fakestoreapi.com/products').catch((err) => console.log(err));
-
-    //         // if (response) {
-    //         //     const products = response.data;
-
-    //         //     console.log("Products: ", products)
-    //         //     setProducts(products);
-    //         // }
-    //     }
-
-    //    // fetchData()
-
-
-
-
-    //     // fireData?.forEach((snapshot)=>{
-
-    //     //     mydata.push(snapshot.data());
-
-    //     // })
-
-    //     // console.log('---clients  outside---');
-
-    //     // setClients(mydata);
-
-
-
-
-
-    // }, []);
-
-    // console.log("----clients log---")
-    // console.log(mydata)
-
-    // console.log('---store  outside---');
-    // console.log(storeData.current);
-
-    //  mydata =[...storeData.current];
-    //  console.log("----clients log---")
-    //  console.log(mydata);
-
-    // setClients(storeData.current)
+  
 
     const datas = useMemo(() => ([
         {
@@ -213,6 +101,15 @@ const Clients = (props: { super: {}[] }) => {
     // )
     // clientData =mydata;
 
+    const deleteTodo = async(id:any)=>{
+        const docRef =doc(db,'clients',id);
+
+        await deleteDoc(docRef);
+        alert("Deleted " + id)
+
+
+    }
+
 
     const productColumns: Array<Column> = useMemo(
         () => props.super[0]
@@ -234,15 +131,17 @@ const Clients = (props: { super: {}[] }) => {
         []
     )
 
+    //alert("Editing " + row.values.phone)
+
     const tableHooks = (hooks: any) => {
         hooks.visibleColumns.push((columns: any) => [
             ...columns,
             {
                 id: "Edit",
-                Header: "Edit",
+                Header: "Delete",
                 Cell: ({ row }: any) => (
-                    <button onClick={() => alert("Editing " + row.values.phone)} className="pl-4  pr-4 pt-2 pb-2 text-black rounded-md bg-green-300 hover:bg-green-200 transition-colors">
-                        Edit
+                    <button onClick={() =>deleteTodo(row.values.id) } className="pl-4  pr-4 pt-2 pb-2 text-black rounded-md bg-red-300 hover:bg-red-200 transition-colors">
+                        Delete
                     </button>
                 )
             }
@@ -250,14 +149,16 @@ const Clients = (props: { super: {}[] }) => {
 
     }
 
+   
 
 
-    interface ExampleObject {
+
+    // interface ExampleObject {
 
 
-        columns: Array<Column>
-        data: Array<any>
-    }
+    //     columns: Array<Column>
+    //     data: Array<any>
+    // }
 
     // const tableInstance = useTable<any>({ columns, data })
     const tableInstance:any = useTable({ columns: productColumns, data: productData }, useGlobalFilter, tableHooks, useSortBy)
@@ -340,36 +241,7 @@ export const getServerSideProps: GetServerSideProps<{
         props: { message: 'hello  after world' },
         notFound: true
     }
-    // let mydata: DocumentData[] = []
-
-    // console.log("pre rendered")
-    // console.log(mydata)
-    // let data="hello"
-
-
-
-    // const todosCollection = collection(db, "clients");
-
-    // const todosQuery = query(todosCollection);
-    // const querySnapshot = await getDocs(todosQuery);
-    // const result: QueryDocumentSnapshot<DocumentData>[] = [];
-    // querySnapshot.forEach((snapshot) => {
-    //     result.push(snapshot);
-    //     mydata.push(snapshot.data());
-    //     // storeData.current.push(snapshot.data())
-    // });
-
-    // const response = await axios.get('https://fakestoreapi.com/products').catch((err) => console.log(err));
-
-    // if (response) {
-    //     const products = response.data;
-
-    //     console.log("Products: ", products)
-    //     return  {
-    //         props: {clients : products}
-    //     }
-
-    // }
+   
 
 
 

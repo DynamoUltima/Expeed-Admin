@@ -3,3 +3,19 @@
 @tailwind utilities;
 
 
+@layer base{
+    body {
+        font-family:'Montserrat'
+    }
+}
+
+@layer utilities {
+    .square{
+        aspect-ratio:1/1
+    }
+
+    .rectangle{
+        aspect-ratio:1/1.5
+    }
+
+}

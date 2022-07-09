@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import { db } from '../firebase/clientApp';
-import { addDoc, collection, DocumentData, getDocs, limit, query, QueryDocumentSnapshot, serverTimestamp, setDoc } from 'firebase/firestore'
+import { addDoc, collection,  serverTimestamp, setDoc ,updateDoc} from 'firebase/firestore'
 import { sendData } from '../utils/send';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useFormik } from 'formik';
@@ -70,7 +70,11 @@ function addClientsForm() {
 
         //check if email already exists 
         //before adding a client
-        const docRefs = await addDoc(collectionRef, { ...values, timestamp: serverTimestamp() })
+        const docRefs = await addDoc(collectionRef, { ...values, timestamp: serverTimestamp(), })
+
+       await updateDoc(docRefs,{
+        id:docRefs.id
+       })
 
 
         console.log(docRefs)
@@ -89,32 +93,7 @@ function addClientsForm() {
     }
   })
 
-  // const { register, handleSubmit, formState: { errors } } = useForm<CredentialInputs>();
-  // const onSubmit: SubmitHandler<CredentialInputs> = async () => {
-  //   //e: { preventDefault: () => void; }
-  //   // e.preventDefault()
-  //   //await  sendData(clients);
-  //   try {
-
-  //     const collectionRef = collection(db, "clients");
-  //     //check if email already exists 
-  //     //before adding a client
-  //     const docRefs = await addDoc(collectionRef, { ...clients, timestamp: serverTimestamp() })
-
-
-  //     console.log(docRefs)
-  //     console.log(docRefs.id)
-  //     console.log(clients);
-
-
-  //     alert(`client with id ${docRefs.id} is added succesfully`)
-  //     setClients({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
-
-  //   } catch (error) {
-
-  //     console.log(error)
-
-  //   }
+  
 
 
 
