@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react"
 import { useAuth } from "../context/AuthContext";
 import Link from "next/link";
-import { route } from "next/dist/server/router";
+
 
 
 
@@ -23,36 +23,36 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
         <ul className="flex flex-col py-4">
           <li>
             <Link href="/dashboardPage">
-            <a  className={router.pathname==="/dashboardPage" ? "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-800 " :"flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"}>
-              <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className="bx bx-home"></i></span>
-              <span className="text-sm font-medium">Dashboard</span>
-            </a>
+              <a className={router.pathname === "/dashboardPage" ? "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-800 " : "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"}>
+                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className="bx bx-home"></i></span>
+                <span className="text-sm font-medium">Dashboard</span>
+              </a>
             </Link>
           </li>
           <li>
-          <Link href="/addClients">
-            <a href="#"  className={router.pathname==="/addClients" ? "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-800 " :"flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"}>
-              <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className='bx bx-clipboard'></i></span>
-              <span className="text-sm font-medium">Register</span>
-            </a>
+            <Link href="/addClients">
+              <a href="#" className={router.pathname === "/addClients" ? "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-800 " : "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"}>
+                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className='bx bx-clipboard'></i></span>
+                <span className="text-sm font-medium">Register</span>
+              </a>
             </Link>
           </li>
           <li>
             <Link href="/datatable">
-            <a  className={router.pathname==="/datatable"? "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-800 " :"flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"}>
-              <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className='bx bx-user'></i></span>
-              <span className="text-sm font-medium">Clients</span>
-            </a>
+              <a className={router.pathname === "/datatable" ? "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-800 " : "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"}>
+                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className='bx bx-user'></i></span>
+                <span className="text-sm font-medium">Clients</span>
+              </a>
             </Link>
           </li>
 
           <li>
-          <Link href="/orderPage">
-            <a  className={router.pathname==="/orderPage"? "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-800 " :"flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"}>
-              <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className="bx bx-shopping-bag"></i></span>
-              <span className="text-sm font-medium">Orders</span>
-            </a>
-           </Link>
+            <Link href="/orderPage">
+              <a className={router.pathname === "/orderPage" ? "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-800 " : "flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800"}>
+                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i className="bx bx-shopping-bag"></i></span>
+                <span className="text-sm font-medium">Orders</span>
+              </a>
+            </Link>
           </li>
           <li>
             <a href="#" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
@@ -77,7 +77,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
             onClick={
               () => {
                 logout()
-                
+
                 router.push('/')
 
               }
@@ -94,6 +94,8 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
         </ul>
 
       </div>
+      
+       {/* Main Page */}
       <div className="m-5 flex-auto w-96 overflow-auto ">
         {children}
       </div>
