@@ -16,11 +16,13 @@ const bidSchema = new Schema({
             ref:'Client'
         }
     ],
-   
-
-    duration:String,
-   
-  
+    bidState: {
+        type: [{
+            type: String,
+            enum: ['pending','accepted','declined','completed']
+        }],
+        default: ['pending']
+    },
     approvedBy:{
         type:Types.ObjectId,
         ref:'User'
@@ -31,6 +33,6 @@ const bidSchema = new Schema({
 }, { timestamps: { createdAt: 'created_on', updatedAt: 'updated_on' }})
 
 
-const Project = models.Bid || model('Bid', bidSchema);
+const Bid = models.Bid || model('Bid', bidSchema);
 
-export default Project
+export default Bid

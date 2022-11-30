@@ -36,6 +36,7 @@ const projectSchema = new Schema({
     },
 
     duration:String,
+    campus:String,
     mediaData :{
      type: [mediaSchema]
     },

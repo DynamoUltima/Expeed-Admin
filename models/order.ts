@@ -23,8 +23,8 @@ import { Schema, model, models ,Types} from "mongoose";
 
 const orderSchema = new Schema({
 
-    projectName: String,
-    projectImage:String,
+    orderTitle: String,
+    orderImage:String,
     description:String,
     price:String,
     serviceType:{
@@ -36,8 +36,16 @@ const orderSchema = new Schema({
     },
 
     duration:String,
+    campus:String,
     mediaData :{
      type: [mediaSchema]
+    },
+    orderState: {
+        type: [{
+            type: String,
+            enum: ['pending','accepted','declined','completed']
+        }],
+        default: ['pending']
     },
   
     createdBy:{
@@ -50,6 +58,6 @@ const orderSchema = new Schema({
 }, { timestamps: { createdAt: 'created_on', updatedAt: 'updated_on' }})
 
 
-const Project = models.Order || model('Order', orderSchema);
+const Order = models.Order || model('Order', orderSchema);
 
-export default Project
+export default Order
