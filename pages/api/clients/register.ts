@@ -20,7 +20,7 @@ const handler: NextApiHandler = async function handler(
   try {
 
     await connectMongo();
-    
+
     console.log('req body');
     console.log(req.body);
 
@@ -33,16 +33,16 @@ const handler: NextApiHandler = async function handler(
 
     const hashedPassword = await hash(generatedpassword, 10)
 
-    const client = await Client.create({ 
-      firstName, 
-      lastName, 
-      email, 
-      expertise, 
-      serviceType, 
-      campus, 
-      phone, 
-      createdBy: req.body.profile, 
-      password: hashedPassword 
+    const client = await Client.create({
+      firstName,
+      lastName,
+      email,
+      expertise,
+      serviceType,
+      campus,
+      phone,
+      createdBy: req.body.profile,
+      password: hashedPassword
     });
 
     client.password = generatedpassword;
@@ -51,21 +51,21 @@ const handler: NextApiHandler = async function handler(
 
     transport.sendMail({
       ...mailOptions,
-      subject:'Password Generated',
-      text:'This your new Password , feel free to reset at anytime',
-      html:`<h1>Your New Password</h1><p>${generatedpassword}</p>`,
-  
+      subject: 'Password Generated',
+      text: 'This your new Password , feel free to reset at anytime',
+      html: `<h1>Your New Password</h1><p>${generatedpassword}</p>`,
+
     })
 
 
     // client.createdBy = req.body.profile
 
 
-   return res.status(200).json({ message: ' registered successfully', client })
+    return res.status(200).json({ message: ' registered successfully', client })
 
   } catch (error) {
     console.log(error);
-   res.status(401).json({ error })
+    return res.status(401).json({ error })
 
   }
 
