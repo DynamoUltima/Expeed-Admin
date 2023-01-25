@@ -20,6 +20,9 @@ const handler: NextApiHandler = async function handler(
   try {
 
     await connectMongo();
+    
+    console.log('req body');
+    console.log(req.body);
 
     const { firstName, lastName, email, expertise, serviceType, campus, phone } = req.body
     const userExist = await Client.exists({ email })
@@ -58,7 +61,7 @@ const handler: NextApiHandler = async function handler(
     // client.createdBy = req.body.profile
 
 
-    res.status(200).json({ message: ' registerd successfully', client })
+   return res.status(200).json({ message: ' registered successfully', client })
 
   } catch (error) {
     console.log(error);

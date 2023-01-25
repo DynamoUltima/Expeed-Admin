@@ -27,7 +27,7 @@ const clientSchema = new Schema({
     serviceType:{
         type: [{
             type: String,
-            enum: ['Thesis','Proposal','Assignment']
+            enum: ['Thesis','Proposals','Assignment']
         }],
         default: ['Assignment']
     },

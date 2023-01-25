@@ -34,45 +34,45 @@ const Clients = (props: { super: {}[] }) => {
 
 
 
-    const datas = useMemo(() => ([
-        {
+    // const datas = useMemo(() => ([
+    //     {
 
-            "category": "men's clothing",
-            "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-            "id": 1,
-            "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-            "price": 109.95,
-            "rating": { rate: 3.9, count: 120 },
-            "title": "Fjallraven - Foldsack No. 1 Backpack, Fit"
-        },
-        {
+    //         "category": "men's clothing",
+    //         "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    //         "id": 1,
+    //         "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    //         "price": 109.95,
+    //         "rating": { rate: 3.9, count: 120 },
+    //         "title": "Fjallraven - Foldsack No. 1 Backpack, Fit"
+    //     },
+    //     {
 
-            "category": "women's clothing",
-            "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-            "id": 2,
-            "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-            "price": 109.95,
-            "rating": { rate: 3.3, count: 120 },
-            "title": "Fjallraven"
-        }
-    ]), []);
+    //         "category": "women's clothing",
+    //         "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    //         "id": 2,
+    //         "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+    //         "price": 109.95,
+    //         "rating": { rate: 3.3, count: 120 },
+    //         "title": "Fjallraven"
+    //     }
+    // ]), []);
 
     const isEven = (idx: number) => idx % 2 === 0
 
 
-    const columns = useMemo(() => ([
-        {
-            Header: "Id",
-            accessor: "id"
-        }, {
-            Header: "Price",
-            accessor: "price"
-        }, {
-            Header: "Title",
-            accessor: "title"
-        }
+    // const columns = useMemo(() => ([
+    //     {
+    //         Header: "Id",
+    //         accessor: "id"
+    //     }, {
+    //         Header: "Price",
+    //         accessor: "price"
+    //     }, {
+    //         Header: "Title",
+    //         accessor: "title"
+    //     }
 
-    ]), [])
+    // ]), [])
 
 
 

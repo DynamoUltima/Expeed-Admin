@@ -30,7 +30,7 @@ const handler:NextApiHandler = async function handler(
       
 
       if(results){
-        let token =  sign({firstName:client.firstName, email: client.email, id : client.id},'exkabakaba',{expiresIn:'1h'})
+        let token =  sign({firstName:client.firstName, email: client.email, id : client.id},'exkabakaba',{expiresIn:'12h'})
         
         console.log('password reults')
         console.log(results)

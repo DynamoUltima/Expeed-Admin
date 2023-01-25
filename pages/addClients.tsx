@@ -31,7 +31,7 @@ type CredentialInputs = {
   campus: string,
   city: string,
   phone: string,
-  
+
 };
 
 function addClientsForm() {
@@ -50,8 +50,8 @@ function addClientsForm() {
       campus: '',
       city: '',
       phone: '',
-      expertise:'',
-      serviceType:''
+      expertise: '',
+      serviceType: ''
     },
     validationSchema: Yup.object({
       firstName: Yup.string()
@@ -63,8 +63,8 @@ function addClientsForm() {
       email: Yup.string().email("Invalid email").required(),
       city: Yup.string().required(),
       phone: Yup.string(),
-      campus:Yup.string(),
-      expertise:Yup.string(),
+      campus: Yup.string(),
+      expertise: Yup.string(),
       serviceType: Yup.string()
 
     }),
@@ -78,20 +78,57 @@ function addClientsForm() {
 
         //check if email already exists 
         //before adding a client
-        const docRefs = await addDoc(collectionRef, { ...values, timestamp: serverTimestamp(), })
+        // const docRefs = await addDoc(collectionRef, { ...values, timestamp: serverTimestamp(), })
 
-        await updateDoc(docRefs, {
-          id: docRefs.id
+        // await updateDoc(docRefs, {
+        //   id: docRefs.id
+        // })
+
+
+        // console.log(docRefs)
+        // console.log(docRefs.id)
+        // // console.log(clients);
+
+
+        // alert(`client with id ${docRefs.id} is added succesfully`)
+        // setClients({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
+
+        const data = { ...values, timestamp: serverTimestamp(), }
+
+
+        const res = await fetch('api/clients/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJLeWxpYW4iLCJlbWFpbCI6Imt5bGlhbkBnbWFpbC5jb20iLCJpZCI6IjYzZDEwMzgyZTQ0ODNkNTZlNjk2OTcwOSIsImlhdCI6MTY3NDY1MzMzMCwiZXhwIjoxNjc0NjU2OTMwfQ.QGX_1wr92pxs_u-I351Uvh6sTZdLtxj-JiS0nqVlNbI'
+          },
+          body: JSON.stringify(data)
         })
 
 
-        console.log(docRefs)
-        console.log(docRefs.id)
-        // console.log(clients);
+      const results= res.json
+      console.log('results');
+      console.log(results);
 
 
-        alert(`client with id ${docRefs.id} is added succesfully`)
-        // setClients({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
+       console.log(results);
+      //  alert(`client with id ${results} is added succesfully`)
+
+
+
+
+
+        // .then(response => response.json())
+        //   .then(data => {
+        //     console.log(data+' data response')
+        //     if (data.status === 'success') {
+        //       // Do something with the successful response
+        //       console.log(data)
+        //     }
+        //     //  else {
+        //     //   // Handle the error
+        //     // }
+        //   })
 
       } catch (error) {
 
