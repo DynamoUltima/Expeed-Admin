@@ -1,4 +1,4 @@
-import { Schema, model, models ,Types} from "mongoose";
+import { Schema, model, models, Types } from "mongoose";
 
 
 
@@ -17,17 +17,21 @@ const clientSchema = new Schema({
         type: String,
         required: true
     },
-   
+    campus: {
+        type: String,
+
+    },
+
 
     phone: {
         type: String,
         trim: true,
         required: true
     },
-    serviceType:{
+    serviceType: {
         type: [{
             type: String,
-            enum: ['Thesis','Proposals','Assignment']
+            enum: ['Thesis', 'Proposals', 'Assignment']
         }],
         default: ['Assignment']
     },
@@ -42,23 +46,23 @@ const clientSchema = new Schema({
     role: {
         type: [{
             type: String,
-            enum: ['admin','provider','client']
+            enum: ['admin', 'provider', 'client']
         }],
         default: ['client']
     },
-    expertise:[],
-    createdBy:{
-        type:Types.ObjectId,
-        ref:'User'
+    expertise: [],
+    createdBy: {
+        type: Types.ObjectId,
+        ref: 'User'
 
     }
 
 
-   
 
-  
- 
-}, { timestamps: { createdAt: 'created_on', updatedAt: 'updated_on' }})
+
+
+
+}, { timestamps: { createdAt: 'created_on', updatedAt: 'updated_on' } })
 
 
 const Client = models.Client || model('Client', clientSchema);

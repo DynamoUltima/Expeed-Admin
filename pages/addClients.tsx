@@ -100,7 +100,7 @@ function addClientsForm() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJLeWxpYW4iLCJlbWFpbCI6Imt5bGlhbkBnbWFpbC5jb20iLCJpZCI6IjYzZDEwMzgyZTQ0ODNkNTZlNjk2OTcwOSIsImlhdCI6MTY3NDY1MzMzMCwiZXhwIjoxNjc0NjU2OTMwfQ.QGX_1wr92pxs_u-I351Uvh6sTZdLtxj-JiS0nqVlNbI'
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJLeWxpYW4iLCJlbWFpbCI6Imt5bGlhbkBnbWFpbC5jb20iLCJpZCI6IjYzZDEwMzgyZTQ0ODNkNTZlNjk2OTcwOSIsImlhdCI6MTY3NDczMTAxMiwiZXhwIjoxNjc0NzM0NjEyfQ.UlfOps84QTkqZ92gwyGBOiYHLJtzXl3C4DbtLaDQXpc'
           },
           body: JSON.stringify(data)
         })

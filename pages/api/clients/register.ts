@@ -21,8 +21,8 @@ const handler: NextApiHandler = async function handler(
 
     await connectMongo();
 
-    console.log('req body');
-    console.log(req.body);
+    // console.log('req body');
+    // console.log(req.body);
 
     const { firstName, lastName, email, expertise, serviceType, campus, phone } = req.body
     const userExist = await Client.exists({ email })

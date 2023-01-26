@@ -8,6 +8,7 @@ import { db } from '../../firebase/clientApp';
 import { GetServerSideProps, GetStaticProps, PreviewData } from 'next'
 import { addDoc, collection, DocumentData, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import { ParsedUrlQuery } from 'querystring';
+import { Clients } from '.';
 
 
 
@@ -15,7 +16,7 @@ import { ParsedUrlQuery } from 'querystring';
 
 
 
-const Clients = (props: { super: {}[] }) => {
+const Clients = ({clients}:{clients: Clients[]}) => {
 
     // const [clients, setClients] = useState<DocumentData[]>([]);
     // const [fireData, setFireData] = useState<QuerySnapshot<DocumentData>>()
@@ -26,7 +27,7 @@ const Clients = (props: { super: {}[] }) => {
 
 
     console.log('super')
-    console.log(props.super);
+    console.log(clients);
 
 
 
@@ -78,7 +79,7 @@ const Clients = (props: { super: {}[] }) => {
 
     // const productData: Array<any> = useMemo(() => [...products], [products])
 
-    const productData: Array<any> = useMemo(() => [...props.super], [props.super])
+    const productData: Array<any> = useMemo(() => [...clients], [clients])
 
     // const productColumns: Array<Column> = useMemo(
     //     () => products[0]
@@ -112,13 +113,13 @@ const Clients = (props: { super: {}[] }) => {
 
 
     const productColumns: Array<Column> = useMemo(
-        () => props.super[0]
-            ? Object.keys(props.super[0])
+        () => clients[0]
+            ? Object.keys(clients[0])
                 // .filter((key) => key !== "id")
                 .map((key) => {
 
 
-                    if (key === "id")
+                    if (key === "_id")
                         return {
                             Header: key,
                             accessor: key,

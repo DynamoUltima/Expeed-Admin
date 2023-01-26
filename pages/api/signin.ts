@@ -41,7 +41,7 @@ const handler:NextApiHandler = async function handler(
       
 
       if(results){
-        let token =  sign({firstName:user.firstName, email: user.email, id : user.id},'exkabakaba',{expiresIn:'1h'})
+        let token =  sign({firstName:user.firstName, email: user.email, id : user.id},'exkabakaba',{expiresIn:'12h'})
         
 
       //   user = Object.keys( user).filter(key =>
