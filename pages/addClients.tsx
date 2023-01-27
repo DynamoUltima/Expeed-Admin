@@ -6,6 +6,7 @@ import { sendData } from '../utils/send';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
+import { useAuth } from '../context/AuthContext';
 
 // export  async function getServerSideProps (context:any){
 
@@ -35,6 +36,8 @@ type CredentialInputs = {
 };
 
 function addClientsForm() {
+
+  const { user, token} = useAuth();
   // console.log(message);
 
 
@@ -74,24 +77,8 @@ function addClientsForm() {
       try {
         console.log('clicked');
 
-        const collectionRef = collection(db, "clients");
+        // const collectionRef = collection(db, "clients");
 
-        //check if email already exists 
-        //before adding a client
-        // const docRefs = await addDoc(collectionRef, { ...values, timestamp: serverTimestamp(), })
-
-        // await updateDoc(docRefs, {
-        //   id: docRefs.id
-        // })
-
-
-        // console.log(docRefs)
-        // console.log(docRefs.id)
-        // // console.log(clients);
-
-
-        // alert(`client with id ${docRefs.id} is added succesfully`)
-        // setClients({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
 
         const data = { ...values, timestamp: serverTimestamp(), }
 
@@ -100,7 +87,7 @@ function addClientsForm() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJLeWxpYW4iLCJlbWFpbCI6Imt5bGlhbkBnbWFpbC5jb20iLCJpZCI6IjYzZDEwMzgyZTQ0ODNkNTZlNjk2OTcwOSIsImlhdCI6MTY3NDczMTAxMiwiZXhwIjoxNjc0NzM0NjEyfQ.UlfOps84QTkqZ92gwyGBOiYHLJtzXl3C4DbtLaDQXpc'
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(data)
         })

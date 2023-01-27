@@ -8,6 +8,7 @@ import { z } from "zod"
 import axios from "axios";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import Client from "./clients";
+import { useAuth } from "../../context/AuthContext";
 
 export interface IClient {
     message: string;
@@ -20,6 +21,7 @@ export interface Clients {
     lastName: string;
     email: string;
     phone: string;
+    campus:string;
     serviceType: ServiceType[];
     role: Role[];
     expertise: string[];
@@ -40,14 +42,36 @@ export type ServiceType = "Assignment" | "Thesis" | "Proposals";
 
 
 export default function Index() {
+    const { user, token} = useAuth();
+
+
+    const fetchAllClients = async () => {
+   
+
+        const response = await axios.get('api/clients/getAll',{
+            data:{},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        
+        });
+        const clients = response.data;
+        return clients;
+    }
+
+ 
 
     const { data, isError, isLoading, error, isSuccess, } = useQuery<IClient>(["getClient"], fetchAllClients, { keepPreviousData: true });
+    
      
     console.log('data')
     console.log(data)
 
+    
+
     if(isError){
-        return (<div>{error}</div>)
+        return (<div>{'error'}</div>)
     }
     // console.log(message);
     return (
@@ -57,7 +81,7 @@ export default function Index() {
             {isSuccess ? <div className="">
                 {/* {message} */}
                 <div>Data Table  </div>
-                <Client clients={data.clients} />
+                <Client clients={data.clients??[]} />
 
             </div> : <div>error</div>
             }
@@ -88,6 +112,8 @@ export default function Index() {
 // }
 
 const fetchAllClients = async () => {
+   
+
     const response = await axios.get('api/clients/getAll',{
         data:{},
         headers: {
@@ -100,56 +126,57 @@ const fetchAllClients = async () => {
     return clients;
 }
 
-export async function getStaticProps(context: any) {
+// export async function getStaticProps(context: any) {
+   
 
-    const Data = z.object({
-        firstName: z.string(),
-        lastName: z.string(),
-        phone: z.string(),
-        campus: z.string(),
-        city: z.string(),
-        id: z.string(),
-    })
+//     const Data = z.object({
+//         firstName: z.string(),
+//         lastName: z.string(),
+//         phone: z.string(),
+//         campus: z.string(),
+//         city: z.string(),
+//         id: z.string(),
+//     })
 
-    type DataType = z.infer<typeof Data>
+//     type DataType = z.infer<typeof Data>
 
-    // console.log('called');
+//     // console.log('called');
 
-    let mydata: DocumentData[] = []
-    // let normalData: DataType[] = [];
+//     let mydata: DocumentData[] = []
+//     // let normalData: DataType[] = [];
 
-    // const todosCollection = collection(db, "clients");
+//     // const todosCollection = collection(db, "clients");
 
-    // const todosQuery = query(todosCollection);
-    // let querySnapshot = await getDocs(todosQuery);
+//     // const todosQuery = query(todosCollection);
+//     // let querySnapshot = await getDocs(todosQuery);
 
-    // querySnapshot.docs.map((item) => {
-    //     // console.log(item.data())
-    //     let data = item.data()
+//     // querySnapshot.docs.map((item) => {
+//     //     // console.log(item.data())
+//     //     let data = item.data()
 
-    //     const res = Data.parse(data)
+//     //     const res = Data.parse(data)
 
-    //     normalData.push(res);
-    // })
-
-
-    //  console.log('mydata')
-    //  console.log(querySnapshot.docs)
-
-    // console.log('normal data')
-    // console.log(normalData);
-
-    const queryClient = new QueryClient()
-
-    await queryClient.prefetchQuery<IClient>(["getClient"], fetchAllClients,);
+//     //     normalData.push(res);
+//     // })
 
 
+//     //  console.log('mydata')
+//     //  console.log(querySnapshot.docs)
 
-    return {
-        props: {
-            dehydratedState: dehydrate(queryClient)
-        },
-        // revalidate: 10000000000
-        // notFound:true
-    }
-}
+//     // console.log('normal data')
+//     // console.log(normalData);
+
+//     const queryClient = new QueryClient()
+
+//     await queryClient.prefetchQuery<IClient>(["getClient"], fetchAllClients,);
+
+
+
+//     return {
+//         props: {
+//             dehydratedState: dehydrate(queryClient)
+//         },
+//         // revalidate: 10000000000
+//         // notFound:true
+//     }
+// }

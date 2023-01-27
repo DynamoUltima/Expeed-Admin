@@ -10,12 +10,16 @@ import { useState } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
+
+
   const [queryClient] = useState(() => new QueryClient());
+
+   
 
   const router = useRouter();
   const noAuthRequired = ['/'];
 
-  
+
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>

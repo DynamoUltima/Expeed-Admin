@@ -27,8 +27,8 @@ const withUserProtect =( handler: NextApiHandler) =>  (req:NextApiRequest, res:N
 try {
     verify(bearerToken, process.env.NEXT_PUBLIC_JWT_SECRET!, async (err, decodedToken: any) => {
         if (err) {
-            console.log(err);
-            return res.json({ error: "You are not Authorized" })
+            console.log(err.message);
+            return res.json({message: "You are not Authorized",error:err })
         }
 
       User.findById(decodedToken.id).select('firstName lastName' ).exec((err: any, user: any) => {

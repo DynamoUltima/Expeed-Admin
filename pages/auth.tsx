@@ -17,12 +17,12 @@ const useUser = () => ({ user: null, loading: false })
 
 const Auth = (): JSX.Element => {
 
-  const { user, signup,login } = useAuth();
+  const { user, signup,login,signIn } = useAuth();
     console.log(user);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-   const router = useRouter();
+  //  const router = useRouter();
 
    
  
@@ -44,9 +44,7 @@ const Auth = (): JSX.Element => {
         
       }
 
-
       console.log({email,password})
-  
     }
 
 
@@ -54,8 +52,11 @@ const Auth = (): JSX.Element => {
       e.preventDefault()
 
       try {
-        await login(email,password);
-        router.push('/addClients')
+        // await login(email,password);
+       await signIn(email,password)
+        setEmail('');
+        setPassword('')
+        // router.push('/addClients')
         
       } catch (error) {
         console.log(error);
