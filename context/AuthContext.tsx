@@ -5,6 +5,7 @@ import { auth, db } from '../firebase/clientApp';
 import { setDoc, doc } from "firebase/firestore"
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
 
 export interface ISignin {
     message: string;
@@ -34,8 +35,11 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     const [token, setToken] = useState('');
     const router = useRouter();
 
-    console.log('Auth Context');
-    console.log(user);
+    const { data:accessToken, } = useQuery(["getToken"], ()=>token, { keepPreviousData: true });
+  
+
+    // console.log('Auth Context');
+    // console.log(user);
 
 
 
@@ -49,6 +53,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
         const response = await axios.post('api/signin', {
             email, password
         })
+       
 
 
         const signInResponse: ISignin = response.data
@@ -63,6 +68,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
             setToken(signInResponse.token)
             setisAuthenticated(true)
             setUser(signInResponse.data)
+            setLoading(false)
             router.push('/addClients')
         }
 
