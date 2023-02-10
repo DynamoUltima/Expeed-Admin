@@ -82,6 +82,9 @@ function addClientsForm() {
 
         const data = { ...values, timestamp: serverTimestamp(), }
 
+        console.log('form Data')
+        console.log(data)
+
 
         const res = await fetch('api/clients/register', {
           method: 'POST',
@@ -99,23 +102,7 @@ function addClientsForm() {
 
 
        console.log(results);
-      //  alert(`client with id ${results} is added succesfully`)
-
-
-
-
-
-        // .then(response => response.json())
-        //   .then(data => {
-        //     console.log(data+' data response')
-        //     if (data.status === 'success') {
-        //       // Do something with the successful response
-        //       console.log(data)
-        //     }
-        //     //  else {
-        //     //   // Handle the error
-        //     // }
-        //   })
+      
 
       } catch (error) {
 

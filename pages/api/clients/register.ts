@@ -21,10 +21,10 @@ const handler: NextApiHandler = async function handler(
 
     await connectMongo();
 
-    // console.log('req body');
-    // console.log(req.body);
+    console.log('req body');
+    console.log(req.body);
 
-    const { firstName, lastName, email, expertise, serviceType, campus, phone } = req.body
+    const { firstName, lastName, email, expertise, serviceType, campus, phone,city,timestamp } = req.body
     const userExist = await Client.exists({ email })
     if (userExist) return res.status(403).json({ error: "Email has already been taken" });
 
@@ -38,9 +38,11 @@ const handler: NextApiHandler = async function handler(
       lastName,
       email,
       expertise,
+      city,
       serviceType,
       campus,
       phone,
+      timestamp,
       createdBy: req.body.profile,
       password: hashedPassword
     });

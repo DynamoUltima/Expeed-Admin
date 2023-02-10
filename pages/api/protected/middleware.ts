@@ -20,12 +20,12 @@ const withUserProtect =( handler: NextApiHandler) =>  (req:NextApiRequest, res:N
         const bearerToken = bearer[1]
 
         req.body.token = bearerToken;
-
-
+//exkabakaba
+//process.env.JWT_SECRET!
 
 
 try {
-    verify(bearerToken, process.env.NEXT_PUBLIC_JWT_SECRET!, async (err, decodedToken: any) => {
+    verify(bearerToken,'exkabakaba' , async (err, decodedToken: any) => {
         if (err) {
             console.log(err.message);
             return res.json({message: "You are not Authorized",error:err })

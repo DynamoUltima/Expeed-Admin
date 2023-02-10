@@ -9,6 +9,7 @@ import axios from "axios";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import Client from "./clients";
 import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
 
 export interface IClient {
     message: string;
@@ -22,12 +23,12 @@ export interface Clients {
     email: string;
     phone: string;
     campus:string;
+    city:string;
     serviceType: ServiceType[];
     role: Role[];
     expertise: string[];
     created_on: Date;
     updated_on: Date;
-    __v: number;
     createdBy?: string;
     password?: string;
 }
@@ -43,10 +44,18 @@ export type ServiceType = "Assignment" | "Thesis" | "Proposals";
 
 export default function Index() {
     const { user, token} = useAuth();
+    
+    // const [accessToken,setAccessToken]= useState('');
 
+
+
+    // setAccessToken(token)
+      
+ 
 
     const fetchAllClients = async () => {
-   
+        // console.log('token index')
+        // console.log(token)
 
         const response = await axios.get('api/clients/getAll',{
             data:{},
@@ -57,12 +66,15 @@ export default function Index() {
         
         });
         const clients = response.data;
+        
+        console.log('clients')
+        console.log(clients)
         return clients;
     }
 
  
 
-    const { data, isError, isLoading, error, isSuccess, } = useQuery<IClient>(["getClient"], fetchAllClients, { keepPreviousData: true });
+    const { data, isError, isLoading, error, isSuccess, } = useQuery<IClient>(["getClient"], fetchAllClients, { keepPreviousData: true, });
     
      
     console.log('data')
@@ -111,20 +123,20 @@ export default function Index() {
 
 // }
 
-const fetchAllClients = async () => {
+// const fetchAllClients = async () => {
    
 
-    const response = await axios.get('api/clients/getAll',{
-        data:{},
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJLeWxpYW4iLCJlbWFpbCI6Imt5bGlhbkBnbWFpbC5jb20iLCJpZCI6IjYzZDEwMzgyZTQ0ODNkNTZlNjk2OTcwOSIsImlhdCI6MTY3NDc0ODQ4OCwiZXhwIjoxNjc0NzUyMDg4fQ.6DerU_rt4wPdmmmY7ZN8e9sXrv3JLZgEpCjFFmpIVVY'
-        }
+//     const response = await axios.get('api/clients/getAll',{
+//         data:{},
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdE5hbWUiOiJLeWxpYW4iLCJlbWFpbCI6Imt5bGlhbkBnbWFpbC5jb20iLCJpZCI6IjYzZDEwMzgyZTQ0ODNkNTZlNjk2OTcwOSIsImlhdCI6MTY3NDc0ODQ4OCwiZXhwIjoxNjc0NzUyMDg4fQ.6DerU_rt4wPdmmmY7ZN8e9sXrv3JLZgEpCjFFmpIVVY'
+//         }
     
-    });
-    const clients = response.data;
-    return clients;
-}
+//     });
+//     const clients = response.data;
+//     return clients;
+// }
 
 // export async function getStaticProps(context: any) {
    

@@ -9,6 +9,10 @@ import { GetServerSideProps, GetStaticProps, PreviewData } from 'next'
 import { addDoc, collection, DocumentData, getDocs, deleteDoc, doc } from 'firebase/firestore'
 import { ParsedUrlQuery } from 'querystring';
 import { Clients } from '.';
+import { useAuth } from '../../context/AuthContext';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import useClient from '../../components/hooks/useClients';
+import CustomPop from '../../components/popups/customPop';
 
 
 
@@ -16,7 +20,16 @@ import { Clients } from '.';
 
 
 
-const Clients = ({clients}:{clients: Clients[]}) => {
+
+const Clients = ({ clients }: { clients: Clients[] }) => {
+
+    const { user, token } = useAuth();
+    const queryClient = useQueryClient();
+    const {mutate:deletClient, isSuccess,data:deletedClient } = useClient()
+
+    
+    console.log('clients from clients')
+    console.log(deletedClient)
 
     // const [clients, setClients] = useState<DocumentData[]>([]);
     // const [fireData, setFireData] = useState<QuerySnapshot<DocumentData>>()
@@ -28,6 +41,8 @@ const Clients = ({clients}:{clients: Clients[]}) => {
 
     console.log('super')
     console.log(clients);
+
+  
 
 
 
@@ -81,35 +96,11 @@ const Clients = ({clients}:{clients: Clients[]}) => {
 
     const productData: Array<any> = useMemo(() => [...clients], [clients])
 
-    // const productColumns: Array<Column> = useMemo(
-    //     () => products[0]
-    //         ? Object.keys(products[0])
-    //             .filter((key) => key !== "rating")
-    //             .map((key) => {
 
-    //                 if (key === "image")
-    //                     return {
-    //                         Header: key,
-    //                         accessor: key,
-    //                         Cell: ({ value }) => <img src={value} />,
-    //                         maxWidth: 70
-    //                     }
-
-    //                 return { Header: key, accessor: key };
-    //             })
-    //         : [],
-    //     [products]
-    // )
-    // clientData =mydata;
-
-    const deleteTodo = async (id: any) => {
-        const docRef = doc(db, 'clients', id);
-
-        await deleteDoc(docRef);
-        alert("Deleted " + id)
+   
 
 
-    }
+    
 
 
     const productColumns: Array<Column> = useMemo(
@@ -117,15 +108,16 @@ const Clients = ({clients}:{clients: Clients[]}) => {
             ? Object.keys(clients[0])
                 // .filter((key) => key !== "id")
                 .map((key) => {
+                    // console.log(key)
 
 
                     if (key === "_id")
                         return {
                             Header: key,
                             accessor: key,
-                            Cell: ({ value }) => <img src={value} alt="image"  className='hidden'/>,
+                            Cell: ({ value }) => <img src={value} alt="image" className='hidden' />,
                             maxWidth: 0,
-                           
+
 
                         }
 
@@ -150,7 +142,7 @@ const Clients = ({clients}:{clients: Clients[]}) => {
                 id: "Edit",
                 Header: "Delete",
                 Cell: ({ row }: any) => (
-                    <button onClick={() => deleteTodo(row.values.id)} className="pl-4  pr-4 pt-2 pb-2 text-black rounded-md bg-red-300 shadow-2xl hover:bg-red-200 transition-colors">
+                    <button onClick={() => deletClient(row.values._id)} className="pl-4  pr-4 pt-2 pb-2 text-black rounded-md bg-red-300 shadow-2xl hover:bg-red-200 transition-colors">
                         Delete
                     </button>
                 ),
@@ -173,7 +165,7 @@ const Clients = ({clients}:{clients: Clients[]}) => {
     // }
 
     // const tableInstance = useTable<any>({ columns, data })
-    const tableInstance: any = useTable({ columns: productColumns, data: productData }, useGlobalFilter, tableHooks, useSortBy ,)
+    const tableInstance: any = useTable({ columns: productColumns, data: productData }, useGlobalFilter, tableHooks, useSortBy,)
 
     interface tableInstanceProps {
         getTableProps: (propGetter?: TablePropGetter<object> | undefined) => TableProps,
@@ -187,7 +179,7 @@ const Clients = ({clients}:{clients: Clients[]}) => {
 
     }
 
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, preGlobalFilteredRows, setGlobalFilter, state,allColumns,getToggleHideAllColumnsProps } = tableInstance;
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, preGlobalFilteredRows, setGlobalFilter, state, allColumns, getToggleHideAllColumnsProps } = tableInstance;
 
 
     return (
@@ -195,7 +187,8 @@ const Clients = ({clients}:{clients: Clients[]}) => {
             <div className=' '>
                 {/* <span>{message}</span> */}
                 {/* {clients.map((client)=>(<div key={client}>{client}</div>))} */}
-               
+                { isSuccess &&(<CustomPop deletedClient={deletedClient}/>)}
+
 
 
                 <>
@@ -222,15 +215,15 @@ const Clients = ({clients}:{clients: Clients[]}) => {
                                         {headerGroup.headers.map((column) => (
 
                                             <th key={column.id} {...column.getHeaderProps(column.getSortByToggleProps())} className="border  p-2" >
-                                                { column.render("Header")}
+                                                {column.render("Header")}
                                                 {column.isSorted ? (column.isSortedDesc ? " ▼" : " ▲") : ""}
-                                                
+
                                                 {/* {
                                                     column.id=="id"?
                                                          <input type={'checkbox'}  {...column.getToggleHiddenProps()}/> :<></>
                                                     
                                                 } */}
-                                                
+
 
                                             </th>
                                         ))}

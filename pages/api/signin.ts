@@ -30,6 +30,8 @@ const handler:NextApiHandler = async function handler(
 
     await connectMongo();
     const {  email, password } = req.body
+    console.log(email+' email');
+    console.log(password+ ' password');
 
     let user = await User.findOne({ email })
 

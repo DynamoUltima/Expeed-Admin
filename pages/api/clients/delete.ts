@@ -12,12 +12,19 @@ const handler: NextApiHandler = async function handler(
     res: NextApiResponse<any>
 ) {
 
-
+   
     try {
-
+        
+         
         await connectMongo();
-        //check if order Id exists
-        const clients = await Client.find().select('-__v -password ')
+        
+
+        const {id}= req.body
+        
+        console.log(id +'id')
+        const clients = await Client.findByIdAndDelete(id).select('-__v ')
+
+        // console.log(clients);
 
         return res.status(200).json({ message: 'Successful', clients })
 
@@ -34,5 +41,3 @@ const handler: NextApiHandler = async function handler(
 
 
 export default withUserProtect(handler);
-
-// export default handler;

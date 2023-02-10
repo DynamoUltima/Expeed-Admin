@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     const [token, setToken] = useState('');
     const router = useRouter();
 
-    const { data:accessToken, } = useQuery(["getToken"], ()=>token, { keepPreviousData: true });
+    // const { data:accessToken, } = useQuery(["getToken"], ()=>token, { keepPreviousData: true });
   
 
     // console.log('Auth Context');

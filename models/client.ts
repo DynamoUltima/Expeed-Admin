@@ -21,6 +21,10 @@ const clientSchema = new Schema({
         type: String,
 
     },
+    city: {
+        type: String,
+
+    },
 
 
     phone: {
