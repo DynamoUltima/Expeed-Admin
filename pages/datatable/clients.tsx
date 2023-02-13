@@ -187,7 +187,7 @@ const Clients = ({ clients }: { clients: Clients[] }) => {
             <div className=' '>
                 {/* <span>{message}</span> */}
                 {/* {clients.map((client)=>(<div key={client}>{client}</div>))} */}
-                { isSuccess &&(<CustomPop deletedClient={deletedClient}/>)}
+                {/* { isSuccess &&(<CustomPop deletedClient={deletedClient}/>)} */}
 
 
 
