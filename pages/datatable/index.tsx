@@ -93,7 +93,7 @@ export default function Index() {
             {isSuccess ? <div className="">
                 {/* {message} */}
                 <div>Data Table  </div>
-                <Client clients={data.clients} />
+                <Client clients={data.clients??[]} />
 
             </div> : <div>error</div>
             }
