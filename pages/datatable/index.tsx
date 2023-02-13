@@ -61,7 +61,7 @@ export default function Index() {
             data:{},
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                // 'Authorization': `Bearer ${token}`
             }
         
         });
@@ -138,57 +138,51 @@ export default function Index() {
 //     return clients;
 // }
 
-// export async function getStaticProps(context: any) {
+export async function getStaticProps(context: any) {
    
 
-//     const Data = z.object({
-//         firstName: z.string(),
-//         lastName: z.string(),
-//         phone: z.string(),
-//         campus: z.string(),
-//         city: z.string(),
-//         id: z.string(),
-//     })
+    const Data = z.object({
+        firstName: z.string(),
+        lastName: z.string(),
+        phone: z.string(),
+        campus: z.string(),
+        city: z.string(),
+        id: z.string(),
+    })
 
-//     type DataType = z.infer<typeof Data>
+    type DataType = z.infer<typeof Data>
 
-//     // console.log('called');
+    // console.log('called');
 
-//     let mydata: DocumentData[] = []
-//     // let normalData: DataType[] = [];
+    let mydata: DocumentData[] = []
+   const fetchAllClients = async () => {
+   
 
-//     // const todosCollection = collection(db, "clients");
+    const response = await axios.get('api/clients/getAll',{
+        data:{},
+        headers: {
+            'Content-Type': 'application/json',
+           
+        }
+    
+    });
+    const clients = response.data;
+    return clients;
+}
 
-//     // const todosQuery = query(todosCollection);
-//     // let querySnapshot = await getDocs(todosQuery);
+   
 
-//     // querySnapshot.docs.map((item) => {
-//     //     // console.log(item.data())
-//     //     let data = item.data()
+    const queryClient = new QueryClient()
 
-//     //     const res = Data.parse(data)
-
-//     //     normalData.push(res);
-//     // })
-
-
-//     //  console.log('mydata')
-//     //  console.log(querySnapshot.docs)
-
-//     // console.log('normal data')
-//     // console.log(normalData);
-
-//     const queryClient = new QueryClient()
-
-//     await queryClient.prefetchQuery<IClient>(["getClient"], fetchAllClients,);
+    await queryClient.prefetchQuery<IClient>(["getClient"], fetchAllClients,);
 
 
 
-//     return {
-//         props: {
-//             dehydratedState: dehydrate(queryClient)
-//         },
-//         // revalidate: 10000000000
-//         // notFound:true
-//     }
-// }
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient)
+        },
+        // revalidate: 10000000000
+        // notFound:true
+    }
+}

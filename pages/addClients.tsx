@@ -1,48 +1,41 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import { db } from '../firebase/clientApp';
-import { addDoc, collection, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, FieldValue, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import { sendData } from '../utils/send';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { useAuth } from '../context/AuthContext';
-
-// export  async function getServerSideProps (context:any){
-
-//   console.log('called');
-
-//   return  {
-//       props: {message: 'hello world'},
-//       // notFound:true
-//   }
-// }
+import { useRegisterClient } from '../components/hooks/useClients';
 
 
-interface FormData {
-  email: string,
-  password: string,
 
-}
 
-type CredentialInputs = {
-  firstName: string,
-  lastName: string,
-  email: string,
-  campus: string,
-  city: string,
-  phone: string,
 
+
+
+ export type CredentialInputs ={
+  timestamp: FieldValue;
+  firstName: string;
+  lastName: string;
+  email: string;
+  campus: string;
+  city: string;
+  phone: string;
+  expertise: string;
+  serviceType: string;
 };
 
 function addClientsForm() {
 
   const { user, token} = useAuth();
-  // console.log(message);
+
+  const {mutate:postClient,data,isLoading, isError,error,isSuccess} = useRegisterClient();
+ 
 
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  // const [clients, setClients] = useState({ firstName: '', lastName: '', email: '', campus: '', city: '', phone: '', });
+ 
 
 
   const formik = useFormik({
@@ -75,34 +68,12 @@ function addClientsForm() {
       console.log(values);
       console.log('clicked');
       try {
-        console.log('clicked');
-
-        // const collectionRef = collection(db, "clients");
-
-
+      
         const data = { ...values, timestamp: serverTimestamp(), }
 
-        console.log('form Data')
-        console.log(data)
-
-
-        const res = await fetch('api/clients/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(data)
-        })
-
-
-      const results= res.json
-      console.log('results');
-      console.log(results);
-
-
-       console.log(results);
-      
+        postClient(data);
+     
+        formik.resetForm()
 
       } catch (error) {
 
@@ -114,10 +85,6 @@ function addClientsForm() {
 
 
 
-
-
-
-  // }
 
   console.log(formik.values);
 
@@ -437,6 +404,7 @@ function addClientsForm() {
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button
                     type="submit"
+                    disabled={formik.isSubmitting}
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Save

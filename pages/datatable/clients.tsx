@@ -11,7 +11,7 @@ import { ParsedUrlQuery } from 'querystring';
 import { Clients } from '.';
 import { useAuth } from '../../context/AuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import useClient from '../../components/hooks/useClients';
+import useDeleteClient from '../../components/hooks/useClients';
 import CustomPop from '../../components/popups/customPop';
 
 
@@ -25,7 +25,7 @@ const Clients = ({ clients }: { clients: Clients[] }) => {
 
     const { user, token } = useAuth();
     const queryClient = useQueryClient();
-    const {mutate:deletClient, isSuccess,data:deletedClient } = useClient()
+    const {mutate:deletClient, isSuccess,data:deletedClient, } = useDeleteClient()
 
     
     console.log('clients from clients')

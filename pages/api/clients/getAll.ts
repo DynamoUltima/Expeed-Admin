@@ -33,6 +33,6 @@ const handler: NextApiHandler = async function handler(
 
 
 
-export default withUserProtect(handler);
+export default handler;
 
 // export default handler;
