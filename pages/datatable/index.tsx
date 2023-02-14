@@ -42,7 +42,7 @@ export type ServiceType = "Assignment" | "Thesis" | "Proposals";
 
 
 
-export default function Index() {
+export default function Index({clientData}:{clientData:IClient}) {
     const { user, token} = useAuth();
     
     // const [accessToken,setAccessToken]= useState('');
@@ -74,7 +74,7 @@ export default function Index() {
 
  
 
-    const { data, isError, isLoading, error, isSuccess, } = useQuery<IClient>(["getClient"], fetchAllClients, { keepPreviousData: true } );
+    const { data, isError, isLoading, error, isSuccess, } = useQuery<IClient>(["getClient"], fetchAllClients, { keepPreviousData: true, initialData:()=>clientData } );
     
      
     console.log('data')
@@ -93,7 +93,7 @@ export default function Index() {
             {isSuccess ? <div className="">
                 {/* {message} */}
                 <div>Data Table  </div>
-                <Client clients={data.clients??[]} />
+                <Client clients={data.clients} />
 
             </div> : <div>error</div>
             }
@@ -175,12 +175,15 @@ export async function getStaticProps(context: any) {
     const queryClient = new QueryClient()
 
     await queryClient.prefetchQuery<IClient>(["getClient"], fetchAllClients,);
+    const { data, isError, isLoading, error, isSuccess, } = useQuery<IClient>(["getClient"], fetchAllClients, { keepPreviousData: true } );
 
 
 
     return {
         props: {
-            dehydratedState: dehydrate(queryClient)
+            dehydratedState: dehydrate(queryClient),
+             clientData:data
+
         },
         // revalidate: 10000000000
         // notFound:true
