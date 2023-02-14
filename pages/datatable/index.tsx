@@ -74,7 +74,7 @@ export default function Index() {
 
  
 
-    const { data, isError, isLoading, error, isSuccess, } = useQuery<IClient>(["getClient"], fetchAllClients, { keepPreviousData: true, });
+    const { data, isError, isLoading, error, isSuccess, } = useQuery<IClient>(["getClient"], fetchAllClients, { keepPreviousData: true } );
     
      
     console.log('data')
