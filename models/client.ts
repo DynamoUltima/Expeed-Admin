@@ -8,7 +8,7 @@ const clientSchema = new Schema({
 
     firstName: String,
     lastName: String,
-    email: {
+    email: { 
         type: String,
         required: true,
         unique: true
@@ -19,6 +19,7 @@ const clientSchema = new Schema({
     },
     campus: {
         type: String,
+        default:'No campus'
 
     },
     city: {
@@ -35,7 +36,7 @@ const clientSchema = new Schema({
     serviceType: {
         type: [{
             type: String,
-            enum: ['Thesis', 'Proposals', 'Assignment']
+            enum: ['Thesis','Proposals', 'Assignment','Term project','Undergraduate application essays','Business proposals','Market research']
         }],
         default: ['Assignment']
     },

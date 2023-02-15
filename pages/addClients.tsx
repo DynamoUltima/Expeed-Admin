@@ -184,6 +184,7 @@ function addClientsForm() {
                         autoComplete="campus-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
+                        <option>No Campus</option>
                         <option>University of Ghana Legon</option>
                         <option>KNUST</option>
                         <option>UPSA</option>
@@ -256,6 +257,10 @@ function addClientsForm() {
                         <option>Assignment</option>
                         <option>Proposals</option>
                         <option>Thesis</option>
+                        <option>Term project</option>
+                        <option>Undergraduate application essays</option>
+                        <option>Business proposals</option>
+                        <option>Market research</option>
                       </select>
                     </div>
 
