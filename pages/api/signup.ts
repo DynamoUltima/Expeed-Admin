@@ -5,6 +5,7 @@ import { connectToDatabase } from '../../utils/mongodb'
 import { compare, hash } from 'bcrypt'
 import { Models } from 'mongoose';
 import { sign } from 'jsonwebtoken';
+import { serialize } from 'cookie';
 
 
 type Data = {
@@ -28,6 +29,7 @@ export default async function handler(
 
     await connectMongo();
     const { firstName, lastName, email, password, phone } = req.body
+    let refreshSecret: string = process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET!;
 
     const userExist = await User.findOne({ email })
     if (userExist) return res.status(403).json({ error: "Email has already been taken" });
@@ -48,11 +50,25 @@ export default async function handler(
 
 
       let token = sign({ firstName: user.firstName, email: user.email, id: user.id }, 'exkabakaba', { expiresIn: '1h' })
+
+      let refreshToken = sign({ firstName: user.firstName, email: user.email, id: user.id }, refreshSecret, { expiresIn: '1d' });
+      await User.updateOne(user, { refreshToken });
+
+      res.setHeader('Set-Cookie', serialize('jwt', refreshToken, {
+        // httpOnly: true,
+        sameSite: 'none',
+        maxAge: 60 * 60 * 24, // 1 day
+        path: '/',
+      }));
+
+
+
+
       return res.status(200).
         json({ message: "Success", data: { firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phone, _id: user._id }, token })
 
-    }
 
+    }
 
 
 

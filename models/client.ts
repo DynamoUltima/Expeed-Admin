@@ -26,7 +26,9 @@ const clientSchema = new Schema({
         type: String,
 
     },
-
+    refreshToken:{
+        type :String
+    },
 
     phone: {
         type: String,
@@ -41,17 +43,11 @@ const clientSchema = new Schema({
         default: ['Assignment']
     },
 
-    // privileges:{
-    //     type: [{
-    //         type: String,
-    //         enum: ['overall','host','coordinator','none']
-    //     }],
-    //     default: ['none']
-    // },
+    
     role: {
         type: [{
             type: String,
-            enum: ['admin', 'provider', 'client']
+            enum: ['admin', 'provider', 'client','none']
         }],
         default: ['client']
     },

@@ -1,5 +1,6 @@
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import Client from '../../../models/client';
+import User from '../../../models/user';
 
 
 import { connectMongo } from '../../../utils/connectMongo';
@@ -17,7 +18,7 @@ const handler: NextApiHandler = async function handler(
 
         await connectMongo();
         //check if order Id exists
-        const clients = await Client.find().select('-__v -password ')
+        const clients = await User.find({role:{$in:'client'}}).select('-__v -password -refreshToken')
 
         return res.status(200).json({ message: 'Successful', clients })
 

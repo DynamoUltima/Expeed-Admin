@@ -4,7 +4,7 @@ import { compare, hash } from 'bcrypt'
 import { Model, Models } from 'mongoose';
 import { connectMongo } from '../../../utils/connectMongo';
 import Client from '../../../models/client';
-
+import { serialize } from 'cookie';
 
 
 type Data = {
@@ -30,12 +30,24 @@ const handler:NextApiHandler = async function handler(
       
 
       if(results){
-        let token =  sign({firstName:client.firstName, email: client.email, id : client.id},'exkabakaba',{expiresIn:'12h'})
+        let token =  sign({firstName:client.firstName, email: client.email, id : client.id},'exkabakaba',{expiresIn:'12h'});
+        const refreshSecret :string =process.env.REFRESH_TOKEN!;
+       
+
+        let refreshToken  =sign({firstName:client.firstName, email: client.email, id : client.id},refreshSecret,{expiresIn:'1d'});
         
         console.log('password reults')
         console.log(results)
-      // client.select('-password')
-      let clientData = await Client.findOne({ email }).select('-password')
+      let clientData: Model<any, {}, {}, {}, any> = await Client.findOne({ email }).select('-password');
+       clientData.updateOne(clientData,{refreshToken:refreshToken});
+
+     
+        
+       res.setHeader('Set-Cookie', serialize('jwt', refreshToken, {
+        // httpOnly: true,
+        maxAge: 60 * 60 * 24, // 1 day
+        path: '/',
+      }));
       
         return  res.status(200).json({
             message:"Login Successful",

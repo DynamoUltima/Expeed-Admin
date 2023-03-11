@@ -3,6 +3,7 @@ import { generate } from 'generate-password';
 import { MongoClient } from 'mongodb';
 import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
 import Client from '../../../models/client';
+import User from '../../../models/user';
 import { connectMongo } from '../../../utils/connectMongo';
 import { connectToDatabase } from '../../../utils/mongodb'
 import { mailOptions, transport } from '../../../utils/nodmailer';
@@ -25,7 +26,7 @@ const handler: NextApiHandler = async function handler(
     console.log(req.body);
 
     const { firstName, lastName, email, expertise, serviceType, campus, phone,city,timestamp } = req.body
-    const userExist = await Client.exists({ email })
+    const userExist = await User.exists({ email })
     if (userExist) return res.status(403).json({ error: "Email has already been taken" });
 
     const generatedpassword = generate({ length: 8, uppercase: false, numbers: true })
@@ -33,7 +34,7 @@ const handler: NextApiHandler = async function handler(
 
     const hashedPassword = await hash(generatedpassword, 10)
 
-    const client = await Client.create({
+    const user = await User.create({
       firstName,
       lastName,
       email,
@@ -43,11 +44,12 @@ const handler: NextApiHandler = async function handler(
       campus,
       phone,
       timestamp,
+      role:['client'],
       createdBy: req.body.profile,
       password: hashedPassword
     });
 
-    client.password = generatedpassword;
+    user.password = generatedpassword;
 
     console.log(generatedpassword);
 
@@ -63,7 +65,7 @@ const handler: NextApiHandler = async function handler(
     // client.createdBy = req.body.profile
 
 
-    return res.status(200).json({ message: ' registered successfully', client })
+    return res.status(200).json({ message: 'registered successfully', user })
 
   } catch (error) {
     console.log(error);

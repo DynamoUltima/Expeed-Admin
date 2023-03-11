@@ -1,4 +1,4 @@
-import { Schema, model, models } from "mongoose";
+import { Schema, model, models, Types } from "mongoose";
 
 
 
@@ -15,12 +15,31 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    refreshToken:{
+        type :String
+    },
 
     phone: {
         type: String,
         trim: true,
         required: true
     },
+    serviceType: {
+        type: [{
+            type: String,
+            enum: ['Thesis','Proposals', 'Assignment','Term project','Undergraduate application essays','Business proposals','Market research','None']
+        }],
+        default: ['None']
+    },
+    campus: {
+        type: String,
+        default:'No campus'
+
+    },
+    city: {
+        type: String,
+    },
+
     // privileges:{
     //     type: [{
     //         type: String,
@@ -31,10 +50,15 @@ const userSchema = new Schema({
     role: {
         type: [{
             type: String,
-            enum: ['admin','provider','client']
+            enum: ['admin','provider','client','none']
         }],
-        default: ['client']
+        default: ['none']
     },
+    expertise: [],
+    createdBy: {
+        type: Types.ObjectId,
+        ref: 'User'
+    }
    
 
   
