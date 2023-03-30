@@ -25,8 +25,14 @@ const handler:NextApiHandler = async function handler(
     const {  email, password } = req.body
     console.log(email+' email');
     console.log(password+ ' password');
+    
+    console.log('req body');
+    console.log(req.body)
 
     let user = await User.findOne({ email })
+
+    console.log('userObjects');
+    // console.log(user);
 
     if(user as Object){
       const results = await  compare(password,user.password)
@@ -42,7 +48,9 @@ const handler:NextApiHandler = async function handler(
 
         let refreshToken  =sign({firstName:user.firstName, email: user.email, id : user.id},refreshSecret,{expiresIn:'1d'});
 
-        await User.updateOne(user,{refreshToken});
+         let results=   await User.findByIdAndUpdate(user._id,{refreshToken},{new:true}).select(' -password -refreshToken');
+
+        //  console.log(results)
 
         res.setHeader('Set-Cookie', serialize('jwt', refreshToken, {
           // httpOnly: true,
@@ -55,7 +63,7 @@ const handler:NextApiHandler = async function handler(
       
        return res.status(200).json({
             message:"Login Successful",
-            data: { firstName: user.firstName, lastName: user.lastName, email: user.email, _id: user._id },
+            data: results,
             token
         })
       } 

@@ -28,8 +28,10 @@ export default async function handler(
     //    collection?.insertOne({firstName:'Dynamo',lastName:'Ultima',email:'dynamo@gmail.com'})
 
     await connectMongo();
-    const { firstName, lastName, email, password, phone } = req.body
+    console.log(req.body)
+    const { firstName, lastName, email, password, phone ,role} = req.body
     let refreshSecret: string = process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET!;
+
 
     const userExist = await User.findOne({ email })
     if (userExist) return res.status(403).json({ error: "Email has already been taken" });
@@ -43,7 +45,7 @@ export default async function handler(
 
 
 
-    const user = await User.create({ firstName, lastName, email, phone, password: hashedPassword });
+    const user = await User.create({ firstName, lastName, email, phone, password: hashedPassword ,role});
 
     if (user) {
 
@@ -52,7 +54,7 @@ export default async function handler(
       let token = sign({ firstName: user.firstName, email: user.email, id: user.id }, 'exkabakaba', { expiresIn: '1h' })
 
       let refreshToken = sign({ firstName: user.firstName, email: user.email, id: user.id }, refreshSecret, { expiresIn: '1d' });
-      await User.updateOne(user, { refreshToken });
+      let results = await User.findByIdAndUpdate(user._id, { refreshToken }, { new: true }).select(' -password -refreshToken');
 
       res.setHeader('Set-Cookie', serialize('jwt', refreshToken, {
         // httpOnly: true,
@@ -65,7 +67,7 @@ export default async function handler(
 
 
       return res.status(200).
-        json({ message: "Success", data: { firstName: user.firstName, lastName: user.lastName, email: user.email, phone: user.phone, _id: user._id }, token })
+        json({ message: "Success", data: results, token })
 
 
     }
