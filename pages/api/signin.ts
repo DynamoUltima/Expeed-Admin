@@ -68,7 +68,7 @@ const handler:NextApiHandler = async function handler(
         })
       } 
 
-      
+        
 
 
     }else{
@@ -87,7 +87,7 @@ const handler:NextApiHandler = async function handler(
 
   } catch (error: any) {
     console.log(error);
-    return res.status(400).json({ error: error.message })
+    return res.status(400).json({ error: error.message }) 
 
 
 
