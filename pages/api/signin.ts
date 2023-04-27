@@ -8,10 +8,6 @@ import withUserProtect from './protected/middleware';
 import { serialize } from 'cookie';
 
 
-type Data = {
-  name: string
-}
-
 
 const handler:NextApiHandler = async function handler(
   req: NextApiRequest,
