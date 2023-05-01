@@ -31,8 +31,8 @@ const handler: NextApiHandler = async function handler(
 
       await connectMongo();
       await runMiddleware(req, res, cors);
-      console.log(req.body)
-      const project = await Project.create(req.body);
+      console.log(req.body.values)
+      const project = await Project.create(req.body.values);
   
   
   
