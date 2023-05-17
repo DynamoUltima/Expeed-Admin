@@ -27,6 +27,7 @@ const projectSchema = new Schema({
     projectImage:String,
     description:String,
     price:String,
+    expertise:String,
     serviceType:{
         type: [{
             type: String,
@@ -35,7 +36,10 @@ const projectSchema = new Schema({
         default: ['Assignment']
     },
 
-    duration:String,
+    duration:{
+      startDate:Date,
+      endDate:Date  
+    },
     campus:String,
     mediaData :{
      type: [mediaSchema]
