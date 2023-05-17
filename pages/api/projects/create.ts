@@ -4,7 +4,7 @@ import { connectMongo } from '../../../utils/connectMongo';
 import Cors from "cors";
 
 const cors = Cors({
-  methods: ["POST", "GET", "HEAD"],
+  methods: ["POST", "GET", "HEAD","PUT"],
 });
 
 function runMiddleware(req: any, res: any, fn: (arg0: any, arg1: any, arg2: (result: any) => void) => void) {
