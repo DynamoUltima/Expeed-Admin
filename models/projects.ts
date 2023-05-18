@@ -15,10 +15,11 @@ import { Schema, model, models ,Types} from "mongoose";
     type:String,
     required:true,
    },
+  
 
 
 
- })
+ } ,{ timestamps: { createdAt: 'created_on', updatedAt: 'updated_on' }})
 
 
 const projectSchema = new Schema({
