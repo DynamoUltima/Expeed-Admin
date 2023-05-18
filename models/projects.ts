@@ -45,6 +45,13 @@ const projectSchema = new Schema({
     mediaData :{
      type: [mediaSchema]
     },
+    orderState: {
+      type: [{
+          type: String,
+          enum: ['pending','accepted','declined','completed']
+      }],
+      default: ['pending']
+  },
   
     createdBy:{
         type:Types.ObjectId,
