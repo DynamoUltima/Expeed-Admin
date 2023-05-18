@@ -20,7 +20,7 @@ const handler: NextApiHandler = async function handler(
     await runMiddleware(req,res, cors);
     const projects = await Project.find()
 
-    return res.status(200).json({ message: 'Successful', orders: projects })
+    return res.status(200).json({ message: 'Successful',  projects })
 
 
     //   res.status(200).json({ message: 'Unsucessful',  })
