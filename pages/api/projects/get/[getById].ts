@@ -1,8 +1,8 @@
 import cors from "cors";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import Project from "../../../models/projects";
-import { runMiddleware } from "../../../utility/allowCors";
-import { connectMongo } from "../../../utils/connectMongo";
+import Project from "../../../../models/projects";
+import { runMiddleware } from "../../../../utility/allowCors";
+import { connectMongo } from "../../../../utils/connectMongo";
 
 
 const handler: NextApiHandler = async function handler(
