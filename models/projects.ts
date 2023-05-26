@@ -32,10 +32,10 @@ const mediaSchema = new Schema({
 const projectSchema = new Schema({
 
   projectName: String,
-  projectImage: String,
+  // projectImage: String,
   description: String,
-  price: String,
-  expertise: String,
+   price: String,
+  // expertise: String,
   serviceType: {
     type: [{
       type: String,
@@ -51,7 +51,7 @@ const projectSchema = new Schema({
     startDate: Date,
     endDate: Date
   },
-  campus: String,
+  // campus: String,
   mediaData: {
     type: [mediaSchema]
   },
