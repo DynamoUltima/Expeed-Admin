@@ -2,21 +2,22 @@ import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 import Project from '../../../models/projects';
 import { connectMongo } from '../../../utils/connectMongo';
 import Cors from "cors";
+import { cors, runMiddleware } from '../../../utility/allowCors';
 
-const cors = Cors({
-    methods: ["POST", "GET", "HEAD","PUT"],
-  });
+// const cors = Cors({
+//     methods: ["POST", "GET", "HEAD","PUT"],
+//   });
   
-  function runMiddleware(req: any, res: any, fn: (arg0: any, arg1: any, arg2: (result: any) => void) => void) {
-    return new Promise((resolve, reject) => {
-      fn(req, res, (result: unknown) => {
-        if (result instanceof Error) {
-          return reject(result);
-        }
-        return resolve(result);
-      });
-    });
-  }
+//   function runMiddleware(req: any, res: any, fn: (arg0: any, arg1: any, arg2: (result: any) => void) => void) {
+//     return new Promise((resolve, reject) => {
+//       fn(req, res, (result: unknown) => {
+//         if (result instanceof Error) {
+//           return reject(result);
+//         }
+//         return resolve(result);
+//       });
+//     });
+//   }
  
 
 const handler: NextApiHandler = async function handler(

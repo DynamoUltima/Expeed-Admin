@@ -6,37 +6,41 @@ import { connectMongo } from "../../../../utils/connectMongo";
 
 
 const handler: NextApiHandler = async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<any>
-  ) {
-     
+  req: NextApiRequest,
+  res: NextApiResponse<any>
+) {
 
-    try {
+  console.log('getById called')
+  const { getById } = req.query
   
-      await connectMongo();
-      await runMiddleware(req, res, cors);
-      
-        //check if order Id exists
-        const {getById} = req.query
-        // const options = { "new": true };
-
-        
-       
-        const project =  await Project.findById(getById)
-        
-
-       return res.status(200).json({ message: 'Successful', project})
-
    
-    //   res.status(200).json({ message: 'Unsucessful',  })
+
  
-    } catch (error) {
-      console.log(error);
+  try {
+
+    // await connectMongo();
+    // await runMiddleware(req, res, cors);
+    // console.log(req.query)
+
+    //check if order Id exists
+    console.log(getById);
+
+
+    const project = await Project.find({ 'createdBy': getById });
+
+
+    return res.status(200).json({ message: 'Successful', project })
+
+
+    //   res.status(200).json({ message: 'Unsucessful',  })
+
+  } catch (error) {
+    console.log(error);
     return res.status(400).json({ error: error })
-    }
-   
   }
 
+}
 
 
-  export default handler;
+
+export default handler;

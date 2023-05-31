@@ -13,8 +13,8 @@ const mediaSchema = new Schema({
   fileName: {
     type: String
   },
-  fileSize:{
-    type:String,
+  fileSize: {
+    type: String,
 
   },
 
@@ -34,7 +34,7 @@ const projectSchema = new Schema({
   projectName: String,
   // projectImage: String,
   description: String,
-   price: String,
+  price: String,
   // expertise: String,
   serviceType: {
     type: [{
@@ -43,8 +43,8 @@ const projectSchema = new Schema({
     }],
     default: ['Assignment']
   },
-  orderId:{
-    type:String,
+  orderId: {
+    type: String,
   },
 
   duration: {
