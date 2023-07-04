@@ -20,7 +20,7 @@ const handler: NextApiHandler = async function handler(
   try {
 
     await connectMongo();
-    // await runMiddleware(req, res, cors);
+    await runMiddleware(req, res, cors);
     // console.log(req.query)
 
     //check if order Id exists
