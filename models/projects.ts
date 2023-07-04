@@ -17,11 +17,20 @@ const mediaSchema = new Schema({
     type: String,
 
   },
+  duration:{
+    startDate:Date,
+    endDate:Date
+  },
 
   link: {
     type: String,
     required: true,
   },
+  createdBy:{
+    type: Types.ObjectId,
+    required: true,
+    ref:'User'
+  }
 
 
 

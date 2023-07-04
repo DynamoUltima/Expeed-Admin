@@ -50,7 +50,7 @@ const orderSchema = new Schema({
   
     createdBy:{
         type:Types.ObjectId,
-        ref:'Client'
+        ref:'User'
     }
 
   
