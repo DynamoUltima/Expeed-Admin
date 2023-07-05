@@ -15,22 +15,26 @@ const handler: NextApiHandler = async function handler(
   const { getById } = req.query
   
    
+  console.log('getId',getById);
 
  
   try {
 
     await connectMongo();
-    await runMiddleware(req, res, cors);
+    // await runMiddleware(req, res, cors);
     // console.log(req.query)
+   
 
     //check if order Id exists
-    console.log(getById);
 
-
-    const project = await Order.find({ 'createdBy': getById });
-
+     if(getById){
+      const project = await Order.find({ 'createdBy': getById });
+      console.log(project)
 
     return res.status(200).json({ message: 'Successful', project })
+  }
+
+  return res.status(200).json({ message: 'Unsucessful' })
 
 
     //   res.status(200).json({ message: 'Unsucessful',  })
