@@ -1,7 +1,7 @@
-import cors from "cors";
+// import cors from "cors";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import Project from "../../../../models/projects";
-import { runMiddleware } from "../../../../utility/allowCors";
+import { cors, runMiddleware } from "../../../../utility/allowCors";
 import { connectMongo } from "../../../../utils/connectMongo";
 import Order from "../../../../models/order";
 
@@ -13,28 +13,28 @@ const handler: NextApiHandler = async function handler(
 
   console.log('getById called')
   const { getById } = req.query
-  
-   
-  console.log('getId',getById);
 
- 
+
+  console.log('getId', getById);
+
+
   try {
 
     await connectMongo();
-    // await runMiddleware(req, res, cors);
+    await runMiddleware(req, res, cors);
     // console.log(req.query)
-   
+
 
     //check if order Id exists
 
-     if(getById){
+    if (getById) {
       const project = await Order.find({ 'createdBy': getById });
       console.log(project)
 
-    return res.status(200).json({ message: 'Successful', project })
-  }
+      return res.status(200).json({ message: 'Successful', project })
+    }
 
-  return res.status(200).json({ message: 'Unsucessful' })
+    return res.status(200).json({ message: 'Unsucessful' })
 
 
     //   res.status(200).json({ message: 'Unsucessful',  })
